@@ -140,22 +140,92 @@ payload_frameworks/
 │   ├── sqli.py
 # Payload Frameworks
 
-A modular CLI toolkit for generating static payload templates used in defensive security training and academic research. This project produces structured, non-executable payload examples for offline lab use and learning — it does not perform network activity or interact with live targets.
+A concise, modular CLI toolkit that generates static payload templates for defensive security training and academic study. All outputs are non-executable templates intended for offline lab use only; this project does not perform network activity or interact with live targets.
 
-## Key Features
+## Table of Contents
 
-- Context-aware payload templates for XSS, SQLi, and command-injection patterns
-- Encoding and obfuscation utilities (URL, Base64, hex, mixed chains)
-- OS- and DB-aware payload variations for realistic simulations
-- Exportable outputs: console, JSON, and plain-text lists for scanners
+- [Quick summary](#quick-summary)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Modules](#modules)
+- [Project structure](#project-structure)
+- [Output formats](#output-formats)
+- [Ethical use](#ethical-use)
+- [Contributing](#contributing)
+- [Examples](#examples)
+
+## Quick summary
+
+- Context-aware payload templates for XSS, SQLi, and command-injection
+- Encoding utilities: URL, Base64, hex, and mixed chains
+- OS- and DB-aware variations for realistic simulations
+- Export options: console, JSON, plain TXT for scanner integration
+
+## Overview
+
+### What this project is
+
+`Payload Frameworks` is a modular command-line toolkit that produces structured, static payload templates for learning and defensive security testing. It is explicitly designed for offline lab use and educational research — it does not send network traffic or target live systems.
+
+### Focus areas
+
+- Cross-Site Scripting (XSS)
+- SQL Injection (SQLi)
+- Command Injection
+- Encoding & obfuscation techniques
+
+### Purpose
+
+The project was created to:
+
+- Demonstrate how common injection payloads are constructed
+- Illustrate how weak input validation leads to vulnerabilities
+- Show simple techniques WAFs may miss or mis-handle
+- Provide a safe lab environment for defensive research and teaching
+
+### Framework architecture
+
+The system follows a layered, modular design:
+
+User CLI input
+      ↓
+Module selection / configuration
+      ↓
+Payload generator (templates)
+      ↓
+Encoding & obfuscation pipeline
+      ↓
+Output (console / JSON / TXT)
+
+### Available modules (summary)
+
+- XSS module
+      - Reflected / stored / DOM-style templates
+      - Tag switching, case manipulation, and encoding variants
+
+- SQLi module
+      - DB-aware templates for MySQL, PostgreSQL, MSSQL
+      - Union-based, error-based, and comment/whitespace bypass patterns
+      - NOTE: no database interaction is performed
+
+- Command-injection module
+      - OS-aware separators and payload patterns
+      - Linux examples: `;`, `&&`, `|`
+      - Windows examples: `&`, `||`, `|`
+
+- Encoding & obfuscation engine
+      - URL, Base64, hex and mixed-encoding chains
+      - Whitespace manipulation and inline-comment techniques
+
+> Safety note: modules only generate static templates for analysis and training. They do not execute payloads or interact with external systems.
 
 ## Installation
 
 Clone and install dependencies:
 
 ```powershell
-git clone https://github.com/your-username/payload-frameworks.git
-cd payload-frameworks
+git clone https://github.com/EndlessTurtle0/Payload_Framework.git
+cd Payload_Framework
 pip install -r requirements.txt
 ```
 
@@ -172,54 +242,53 @@ python main.py --module xss --output payloads.json
 
 ## Modules
 
-- `xss` — Reflected, stored and DOM-style XSS templates; tag and case variations
+- `xss` — Reflected, stored and DOM-style XSS templates, with tag/case variations
 - `sqli` — MySQL / PostgreSQL / MSSQL templates (union-based, error-based, comment bypasses)
 - `cmdi` — Command-injection templates with OS-aware separators and bypass patterns
-- `encoder` — Encoding/obfuscation utilities: URL, Base64, hex and mixed encodings
+- `encoder` — Encoding/obfuscation helpers (URL, Base64, hex, mixed chains)
 
-Note: modules generate static templates only; no live exploitation or network traffic is performed.
+> Note: Modules generate static payload templates only; there is no live exploitation.
 
-## Project Structure
+## Project structure
 
 - `main.py` — CLI entrypoint
 - `modules/` — Payload generators (`xss.py`, `sqli.py`, `cmdi.py`)
 - `utils/` — Helpers (encoding, exporting)
 - `samples/` — Example payload lists
 
-## Output Formats
+## Output formats
 
-- Console — Immediate CLI output
-- JSON — Structured payload export for analysis
-- TXT — Plain lists for scanner/import into tools like Burp or ZAP
+- **Console** — Immediate CLI output
+- **JSON** — Structured payload export
+- **TXT** — Plain lists for scanner import (Burp/ZAP)
 
-## Ethical Use
+## Ethical use
 
-This framework is intended for:
+Intended usage:
 
 - Academic research and coursework
-- Authorized penetration testing and red-team exercises
+- Authorized penetration testing and red-team work
 - Lab-based security training and defensive WAF testing
 
-Do NOT use this tool to attack systems without explicit authorization. The author and contributors are not responsible for misuse.
+Do not use this project to attack systems without explicit authorization. The authors are not responsible for misuse.
 
 ## Contributing
 
-To add a new payload category:
+To add a payload category:
 
-1. Add a new module file under `modules/`
-2. Implement a generator class that exposes a consistent interface
+1. Create a new module file under `modules/`
+2. Implement a generator class with the project's generator interface
 3. Register the module in `main.py` and connect it to the encoder/exporter
 
-## Example (static templates)
+## Examples
 
 - XSS: `"><script>alert(1)</script>`
 - SQLi: `' UNION SELECT NULL,NULL-- -`
 - CMDi: `; whoami`
 
-## License & Disclaimer
+---
 
-Provided for educational and defensive research purposes. Use responsibly and legally.
-
+If you'd like, I can also update the repository description on GitHub to a concise sentence (recommended) and set topics — I just need a GitHub PAT or `GH_TOKEN` in your environment to do that.
 ---
 
 If you'd like I can also: run a quick lint/format, update `requirements.txt`, or convert this README into a shorter quickstart. Tell me which next step you prefer.
